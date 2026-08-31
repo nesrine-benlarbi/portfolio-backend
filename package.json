@@ -1,0 +1,29 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "description": "API back-end du portfolio dynamique L'Atelier (Express, MySQL, JWT)",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "Nesrine Benlarbi",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.11"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.3",
+    "nodemailer": "^8.0.7"
+  }
+}
