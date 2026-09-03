@@ -92,11 +92,11 @@ INSERT INTO `technologies` (`id`, `name`) VALUES
 (11, 'Leaflet OpenStreetMap'),
 (12, 'Framer Motion'),
 (13, 'PHP'),
-(14, 'Docker'),
-(15, 'Apache'),
-(16, 'Architecture MVC'),
-(17, 'TypeScript'),
-(18, 'Vite');
+(15, 'Docker'),
+(16, 'Apache'),
+(17, 'Architecture MVC'),
+(19, 'TypeScript'),
+(20, 'Vite');
 
 -- --------------------------------------------------------
 --
@@ -131,14 +131,10 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `user_id`, `category_id`, `title`, `description`, `github_url`, `demo_url`, `image_url`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 1, 3, 'E-commerce App', 'Site de vente de sneakers', 'https://github.com/user/sneakers', NULL, 'https://picsum.photos/201', '2026-05-07 09:03:51', '2026-05-07 09:03:51', NULL),
-(3, 1, 3, 'Application E-commerce Sneakers', 'Une plateforme complète avec panier, paiement Stripe et gestion des stocks.', 'https://github.com/votre-compte/sneakers-app', 'https://sneakers-demo.com', 'https://picsum.photos/seed/sneakers/800/600', '2026-05-07 12:08:14', '2026-05-07 12:08:14', NULL),
-(4, 1, 1, 'Atelier de Médecine Chinoise', 'Création d\'une plateforme vitrine et de prise de rendez-vous pour un praticien en Médecine Traditionnelle Chinoise. Le site intègre un herbier digital interactif, une présentation des cinq éléments (Wu Xing) et un espace de conseils saisonniers pour harmoniser le Qi. Design épuré, apaisant et axé sur le bien-être.', 'https://github.com/votre-compte/cabinet-mtc', 'https://cabinet-medecine-chinoise.demo', 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=800&q=80', '2026-05-15 23:58:20', '2026-05-15 23:58:20', NULL),
-(5, 1, 2, 'EquiPâture & Soins', 'Une application web de gestion éco-responsable des pâtures et du suivi de santé pour les propriétaires de chevaux. Permet de planifier la rotation des herbagers (pâturage tournant), de suivre le calendrier des soins (vermifuges, parage, ostéopathe) et d\'analyser l\'état corporel des équidés grâce à un tableau de bord intuitif.', 'https://github.com/votre-compte/equipature', 'https://equipature-soins.demo', 'https://univers-cheval.fr/cdn/shop/articles/ChatGPT_Image_Apr_11_2025_10_12_18_AM_fa30e96d-a61b-4445-a515-7c82a1eff2c8_1200x1200.png?v=1744980262', '2026-05-15 23:58:20', '2026-06-09 13:05:24', NULL),
-(6, 1, 2, 'L\'Écho des Forêts', 'Application de cartographie collaborative répertoriant la flore sauvage locale et les sentiers de randonnée préservés. Développée dans une démarche d\'éco-conception logicielle pour limiter l\'impact carbone, avec un mode hors-ligne pour les zones blanches arborées.', 'https://github.com/votre-compte/echo-forets', 'https://echo-des-forets.demo', 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80', '2026-05-15 23:58:20', '2026-05-15 23:58:20', NULL),
-(7, 1, 1, 'Lin & Matière', 'Site vitrine immersif pour un atelier de tissage artisanal et de teinture végétale. Valorisation des circuits courts, fiches d\'explications sur les plantes tinctoriales (garance, gaude, pastel) et catalogue interactif des collections de lin lavé.', 'https://github.com/votre-compte/lin-matiere', 'https://lin-et-matiere.demo', 'https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=800&q=80', '2026-05-15 23:58:20', '2026-05-15 23:58:20', NULL),
-(8, 1, 2, 'Atelier DEIN — Médiathèque collaborative', 'Application de gestion d''une médiathèque, développée en équipe de quatre développeurs — Daria, Elyas, Ihsan et Nesrine, dont les initiales forment le nom du projet. Catalogue de livres, films et jeux, fiches détaillées, système d''emprunts et espace d''administration. Réalisée en PHP avec une architecture MVC codée sans framework, une base MySQL et un environnement conteneurisé avec Docker Compose. Ma contribution : l''intégration CSS, l''affichage des cartes de médias sur la page d''accueil et la page de détail d''un média — 28 commits.', 'https://github.com/nesrine-benlarbi/atelier_dein', NULL, 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=800&q=80', '2026-09-03 20:30:00', '2026-09-03 20:30:00', NULL),
-(9, 1, 2, 'MarsAI — Festival de courts-métrages IA', 'Plateforme web d''un festival de courts-métrages réalisés avec l''intelligence artificielle, développée en équipe de quatre — Nesrine, Elyas, Ressane et Daria. Monorepo associant une application React en TypeScript et une API Express, avec intégration continue et déploiement automatisé sur un serveur privé. J''ai conçu l''application dans son ensemble : le cahier des charges avec Elyas, l''articulation des écrans et des parcours utilisateur, l''identité graphique, et la totalité des maquettes sur Figma. Le développement a ensuite été mené collectivement ; j''y ai codé en binôme la page d''accueil, les cartes de films, leur page de détail et les composants réutilisables — 30 commits.', 'https://github.com/nesrine-benlarbi/atelier-marsai', 'https://marsai.elyasbenyoub.dev', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80', '2026-09-03 21:00:00', '2026-09-03 21:00:00', NULL);
+(4, 1, 1, 'Atelier de Médecine Chinoise — en cours', 'Plateforme vitrine et de prise de rendez-vous pour un praticien en médecine traditionnelle chinoise. Le site intégrera un herbier digital interactif, une présentation des cinq éléments (Wu Xing) et un espace de conseils saisonniers, dans un design épuré et apaisant. Projet personnel en cours : la conception est engagée, et un blog développé séparément y sera intégré. Le dépôt sera publié à la première version fonctionnelle.', NULL, NULL, 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=800&q=80', '2026-05-16 01:58:20', '2026-09-03 23:10:49', NULL),
+(5, 1, 2, 'EquiPâture & Soins — en cours', 'Application web de gestion éco-responsable pour les propriétaires de chevaux : rotation des pâtures selon le principe du pâturage tournant, suivi de l''alimentation, et calendrier des soins — vermifuges, parage, ostéopathe. Un tableau de bord donnera une vue d''ensemble de l''état de chaque équidé. Projet personnel en cours de conception ; le dépôt sera publié au démarrage du développement.', NULL, NULL, 'https://univers-cheval.fr/cdn/shop/articles/ChatGPT_Image_Apr_11_2025_10_12_18_AM_fa30e96d-a61b-4445-a515-7c82a1eff2c8_1200x1200.png?v=1744980262', '2026-05-16 01:58:20', '2026-09-03 23:10:49', NULL),
+(8, 1, 2, 'Atelier DEIN — Médiathèque collaborative', 'Application de gestion d''une médiathèque, développée en équipe de quatre développeurs — Daria, Elyas, Ihsan et Nesrine, dont les initiales forment le nom du projet. Catalogue de livres, films et jeux, fiches détaillées, système d''emprunts et espace d''administration. Réalisée en PHP avec une architecture MVC codée sans framework, une base MySQL et un environnement conteneurisé avec Docker Compose. Ma contribution : l''intégration CSS, l''affichage des cartes de médias sur la page d''accueil et la page de détail d''un média — 28 commits.', 'https://github.com/nesrine-benlarbi/atelier_dein', NULL, 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=800&q=80', '2026-09-03 22:22:22', '2026-09-03 22:33:35', NULL),
+(9, 1, 2, 'MarsAI — Festival de courts-métrages IA', 'Plateforme web d''un festival de courts-métrages réalisés avec l''intelligence artificielle, développée en équipe de quatre — Nesrine, Elyas, Ressane et Daria. Monorepo associant une application React en TypeScript et une API Express, avec intégration continue et déploiement automatisé sur un serveur privé. J''ai conçu l''application dans son ensemble : le cahier des charges avec Elyas, l''articulation des écrans et des parcours utilisateur, l''identité graphique, et la totalité des maquettes sur Figma. Le développement a ensuite été mené collectivement ; j''y ai codé en binôme la page d''accueil, les cartes de films, leur page de détail et les composants réutilisables — 30 commits.', 'https://github.com/nesrine-benlarbi/atelier-marsai', 'https://marsai.elyasbenyoub.dev', 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80', '2026-09-03 22:48:27', '2026-09-03 22:55:49', NULL);
 
 -- --------------------------------------------------------
 --
@@ -167,22 +163,7 @@ CREATE TABLE `project_technologies` (
 --
 
 INSERT INTO `project_technologies` (`project_id`, `technology_id`) VALUES
--- 2 : E-commerce App — Vue.js, Express, MongoDB
-(2, 6), (2, 3), (2, 7),
--- 3 : Application E-commerce Sneakers — React, Node.js, MySQL, Stripe API
-(3, 1), (3, 2), (3, 5), (3, 8),
--- 4 : Atelier de Médecine Chinoise — React, Node.js, Express, Tailwind CSS, MySQL
-(4, 1), (4, 2), (4, 3), (4, 4), (4, 5),
--- 5 : EquiPâture & Soins — React, Context API, Tailwind CSS, MySQL, Chart.js
-(5, 1), (5, 9), (5, 4), (5, 5), (5, 10),
--- 6 : L'Écho des Forêts — React, Leaflet OpenStreetMap, Node.js, Tailwind CSS
-(6, 1), (6, 11), (6, 2), (6, 4),
--- 7 : Lin & Matière — React, Framer Motion, Tailwind CSS
-(7, 1), (7, 12), (7, 4),
--- 8 : Atelier Dein — PHP, MySQL, Docker, Apache, Architecture MVC
-(8, 13), (8, 5), (8, 14), (8, 15), (8, 16),
--- 9 : MarsAI — React, TypeScript, Vite, Tailwind CSS, Express, MySQL, Docker
-(9, 1), (9, 17), (9, 18), (9, 4), (9, 3), (9, 5), (9, 14);
+(4, 1), (4, 2), (4, 3), (4, 4), (4, 5), (5, 1), (5, 4), (5, 5), (5, 9), (5, 10), (8, 5), (8, 13), (8, 15), (8, 16), (8, 17), (9, 1), (9, 3), (9, 4), (9, 5), (9, 15), (9, 19), (9, 20);
 
 COMMIT;
 
