@@ -1,2 +1,6 @@
 node_modules/
 .env
+
+# Fichiers de travail locaux
+*.bak
+*.zip

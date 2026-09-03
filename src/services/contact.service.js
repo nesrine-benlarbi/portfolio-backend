@@ -11,9 +11,22 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
+    // Google affiche le mot de passe d'application par groupes de 4 séparés
+    // par des espaces (ex: "abcd efgh ijkl mnop"). On retire tout espace pour
+    // éviter une erreur d'authentification si le mot de passe est collé tel quel.
+    pass: (process.env.MAIL_PASS || "").replace(/\s/g, ""),
   },
 });
+// console.log("MAIL_USER :", process.env.MAIL_USER);
+// console.log("MAIL_PASS présent :", !!process.env.MAIL_PASS);
+
+// transporter.verify((error, success) => {
+//   if (error) {
+//     console.error("❌ Erreur configuration Nodemailer :", error);
+//   } else {
+//     console.log("✅ Serveur SMTP prêt à envoyer des e-mails");
+//   }
+// });
 
 // 2. Échappement des données du formulaire avant insertion dans le HTML.
 // Le formulaire est public : sans ça, n'importe qui peut injecter du balisage
@@ -144,7 +157,12 @@ export const sendContactEmail = async ({ subject, name, email, message }) => {
   try {
     return await transporter.sendMail(mailOptions);
   } catch (error) {
+    // Le détail technique (identifiants SMTP, réponse Gmail…) reste côté serveur,
+    // on ne renvoie au visiteur qu'un message générique.
     console.error("💥 ERREUR CRITIQUE NODEMAILER :", error.message);
-    throw new AppError(`Échec de l'envoi du message : ${error.message}`, 500);
+    throw new AppError(
+      "L'envoi du message a échoué. Veuillez réessayer plus tard ou me contacter directement par e-mail.",
+      500
+    );
   }
 };

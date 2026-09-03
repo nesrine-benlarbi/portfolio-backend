@@ -6,6 +6,7 @@ import errorHandler from './middlewares/errorHandler.js';
 import authRoutes from './routes/auth.routes.js';
 import contactRoutes from './routes/contact.routes.js';
 import projectRoutes from './routes/project.routes.js';
+import referenceRoutes from './routes/reference.routes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api', referenceRoutes); // /api/categories et /api/technologies
 
 // Gestionnaire d'erreurs (toujours en dernier)
 app.use(errorHandler);
