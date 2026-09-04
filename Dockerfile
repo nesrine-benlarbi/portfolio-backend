@@ -11,6 +11,9 @@ RUN npm ci --omit=dev
 # 2e couche : code source
 COPY src ./src
 
+# Schéma SQL : nécessaire à l'import ponctuel déclenché par SEED_ON_BOOT
+COPY db ./db
+
 # Port exposé par l'API Express
 EXPOSE 3001
 
