@@ -11,12 +11,6 @@ import referenceRoutes from './routes/reference.routes.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middlewares globaux
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL || 'http://localhost:5173',
-//   })
-// );
 
 app.use(
   cors({
