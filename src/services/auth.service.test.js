@@ -15,7 +15,12 @@ describe("loginUser", () => {
         User.findByEmail.mockResolvedValue(null); 
         
         //Act
-        const error = await loginUser("inconnu@example.com", "password123").catch(e => e);
+        // Le service attend un objet { email, password } : passer deux arguments
+        // positionnels faisait passer le test pour la mauvaise raison.
+        const error = await loginUser({
+            email: "inconnu@example.com",
+            password: "password123",
+        }).catch(e => e);
         
         //Assert
         expect(error).toBeInstanceOf(AppError);

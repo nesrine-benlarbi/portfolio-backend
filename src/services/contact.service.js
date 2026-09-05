@@ -5,11 +5,12 @@ dotenv.config();
 
 // 1. Transport : API HTTP de Resend plutôt que SMTP.
 //
-// Pourquoi : l'hébergeur (Render, offre gratuite) bloque les ports SMTP
-// sortants (25, 465, 587) pour empêcher le spam. La connexion à
-// smtp.gmail.com:465 n'aboutissait donc jamais et le formulaire restait en
-// attente jusqu'au délai par défaut de Nodemailer, soit deux minutes. L'API
-// de Resend passe en HTTPS sur le port 443, qui lui n'est pas filtré.
+// Pourquoi : en production, la connexion a smtp.gmail.com:465 n'aboutissait
+// jamais — les journaux montraient un ETIMEDOUT au bout de deux minutes, soit
+// le delai par defaut de Nodemailer, pendant lesquelles le formulaire restait
+// en attente. Les hebergeurs mutualises filtrent couramment les ports SMTP
+// sortants pour empecher le spam. L'API de Resend passe en HTTPS sur le port
+// 443, et fonctionne depuis cet environnement.
 //
 // RESEND_API_KEY : clé créée sur resend.com, fournie par variable d'environnement.
 // MAIL_FROM      : expéditeur. Sans nom de domaine vérifié, Resend impose son
