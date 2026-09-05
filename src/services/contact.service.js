@@ -1,32 +1,24 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv'; // 🎯 Import de dotenv
+import dotenv from 'dotenv';
 import AppError from '../errors/AppError.js';
 
-dotenv.config(); // 🎯 Initialisation obligatoire pour lire le fichier .env
+dotenv.config();
 
-// 1. Création et configuration du transporteur — envoi réel via Gmail SMTP
-// (MAIL_USER = l'adresse Gmail expéditrice, MAIL_PASS = un "mot de passe d'application"
-// Google, pas le mot de passe du compte — voir myaccount.google.com/apppasswords)
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.MAIL_USER,
-    // Google affiche le mot de passe d'application par groupes de 4 séparés
-    // par des espaces (ex: "abcd efgh ijkl mnop"). On retire tout espace pour
-    // éviter une erreur d'authentification si le mot de passe est collé tel quel.
-    pass: (process.env.MAIL_PASS || "").replace(/\s/g, ""),
-  },
-});
-// console.log("MAIL_USER :", process.env.MAIL_USER);
-// console.log("MAIL_PASS présent :", !!process.env.MAIL_PASS);
-
-// transporter.verify((error, success) => {
-//   if (error) {
-//     console.error("❌ Erreur configuration Nodemailer :", error);
-//   } else {
-//     console.log("✅ Serveur SMTP prêt à envoyer des e-mails");
-//   }
-// });
+// 1. Transport : API HTTP de Resend plutôt que SMTP.
+//
+// Pourquoi : l'hébergeur (Render, offre gratuite) bloque les ports SMTP
+// sortants (25, 465, 587) pour empêcher le spam. La connexion à
+// smtp.gmail.com:465 n'aboutissait donc jamais et le formulaire restait en
+// attente jusqu'au délai par défaut de Nodemailer, soit deux minutes. L'API
+// de Resend passe en HTTPS sur le port 443, qui lui n'est pas filtré.
+//
+// RESEND_API_KEY : clé créée sur resend.com, fournie par variable d'environnement.
+// MAIL_FROM      : expéditeur. Sans nom de domaine vérifié, Resend impose son
+//                  adresse de démarrage, qui n'écrit qu'au titulaire du compte —
+//                  ce qui suffit ici, le formulaire m'écrit à moi.
+// MAIL_TO        : destinataire des notifications.
+const RESEND_URL = 'https://api.resend.com/emails';
+const MAIL_FROM = process.env.MAIL_FROM || "L'Atelier <onboarding@resend.dev>";
+const MAIL_TO = process.env.MAIL_TO || 'n.benlarbi3@gmail.com';
 
 // 2. Échappement des données du formulaire avant insertion dans le HTML.
 // Le formulaire est public : sans ça, n'importe qui peut injecter du balisage
@@ -47,10 +39,10 @@ export const sendContactEmail = async ({ subject, name, email, message }) => {
   const safeMessage = escapeHtml(message);
 
   const mailOptions = {
-    from: `"L'Atelier - Portfolio" <${process.env.MAIL_USER}>`,
-    to: process.env.MAIL_TO || "n.benlarbi3@gmail.com",
+    from: MAIL_FROM,
+    to: [MAIL_TO],
     // Permet de répondre directement au visiteur depuis la boîte de réception
-    replyTo: email,
+    reply_to: email,
     subject: `[L'Atelier] ${subject || 'Demande de projet'} - ${name}`,
     text: `Nouveau message reçu depuis le formulaire.\n\nNom : ${name}\nEmail : ${email}\n\nMessage :\n${message}`,
     html: `<!DOCTYPE html>
@@ -155,11 +147,31 @@ export const sendContactEmail = async ({ subject, name, email, message }) => {
   };
 
   try {
-    return await transporter.sendMail(mailOptions);
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY absente : le service d'envoi n'est pas configuré.");
+    }
+
+    // Délai explicite : sans lui, une panne réseau laisserait le visiteur
+    // devant un formulaire qui tourne indéfiniment. Dix secondes suffisent.
+    const reponse = await fetch(RESEND_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(mailOptions),
+      signal: AbortSignal.timeout(10000),
+    });
+
+    if (!reponse.ok) {
+      throw new Error(`Resend a répondu ${reponse.status} : ${await reponse.text()}`);
+    }
+
+    return await reponse.json();
   } catch (error) {
-    // Le détail technique (identifiants SMTP, réponse Gmail…) reste côté serveur,
+    // Le détail technique (clé d'API, réponse de Resend…) reste côté serveur,
     // on ne renvoie au visiteur qu'un message générique.
-    console.error("💥 ERREUR CRITIQUE NODEMAILER :", error.message);
+    console.error("💥 ERREUR CRITIQUE ENVOI E-MAIL :", error.message);
     throw new AppError(
       "L'envoi du message a échoué. Veuillez réessayer plus tard ou me contacter directement par e-mail.",
       500
